@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Flight Tracker</title>
+  <link rel="stylesheet" type="text/css" href="styles.css">
+</head>
+<body>
+  <h1>Add a Flight</h1>
+  <form id="flight-form">
+    <label for="origin">Origin:</label>
+    <input type="text" id="origin" name="origin" required>
+    <br>
+    <label for="destination">Destination:</label>
+    <input type="text" id="destination" name="destination" required>
+    <br>
+    <label for="date">Date:</label>
+    <input type="date" id="date" name="date" required>
+    <br>
+    <label for="aviosEarned">Avios Earned:</label>
+    <input type="number" id="aviosEarned" name="aviosEarned">
+    <br>
+    <label for="tierPointsEarned">Tier Points Earned:</label>
+    <input type="number" id="tierPointsEarned" name="tierPointsEarned">
+    <br>
+    <input type="submit" value="Add Flight">
+  </form>
+
+  <script>
+    // JavaScript to handle form submission
+    const form = document.getElementById('flight-form');
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const formData = new FormData(form);
+      const data = Object.fromEntries(formData);
+
+      try {
+        const response = await fetch('http://localhost:3000/addflight', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data),
+        });
+
+        if (response.ok) {
+          alert('Flight added successfully!');
+        } else {
+          alert('Failed to add flight');
+        }
+      } catch (error) {
+        alert('An error occurred: ' + error);
+      }
+    });
+  </script>
+</body>
+</html>
